@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Addition Exercises for Kids</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f8ff; text-align: center; }
+    .question { margin: 20px 0; font-size: 1.5em; }
+    input[type="number"] { font-size: 1.2em; width: 60px; }
+    button { font-size: 1em; padding: 8px 16px; margin-top: 10px; }
+    .feedback { font-size: 1.2em; margin-top: 10px; }
+    video { margin: 20px auto; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Addition Fun!</h1>
+  <video width="320" height="240" controls>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="question" id="question"></div>
+  <input type="number" id="answer" autocomplete="off" />
+  <button onclick="checkAnswer()">Check</button>
+  <div class="feedback" id="feedback"></div>
+
+  <!-- Sound effects -->
+  <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b7b1b.mp3"></audio>
+  <audio id="wrongSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_126b7b7b1b.mp3"></audio>
+
+  <script>
+    const questions = [
+      { q: "What is 3 + 2?", a: 5 },
+      { q: "What is 5 + 1?", a: 6 },
+      { q: "What is 4 + 4?", a: 8 },
+      { q: "What is 2 + 3?", a: 5 },
+      { q: "What is 1 + 6?", a: 7 }
+    ];
+    let current = 0;
+
+    function showQuestion() {
+      document.getElementById('question').textContent = questions[current].q;
+      document.getElementById('answer').value = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('answer').focus();
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseInt(document.getElementById('answer').value, 10);
+      const correct = questions[current].a;
+      const feedback = document.getElementById('feedback');
+      if (userAnswer === correct) {
+        document.getElementById('correctSound').play();
+        feedback.textContent = "🎉 Correct! Great job!";
+        feedback.style.color = "green";
+        setTimeout(() => {
+          current = (current + 1) % questions.length;
+          showQuestion();
+        }, 1500);
+      } else {
+        document.getElementById('wrongSound').play();
+        feedback.textContent = "❌ Oops! Try again.";
+        feedback.style.color = "red";
+      }
+    }
+
+    // Start
+    showQuestion();
+  </script>
+</body>
+</html>
